@@ -62,8 +62,8 @@ const BasicForm = (props) => {
     ? "form-control invalid"
     : "form-control";
 
-  const errorText = <p>This field is required.</p>  
-  
+  const errorText = <p className="error-text">This field is required.</p>  
+
   return (
     <form onSubmit={formSubmitHandler}>
       <div className={"control-group"}>
@@ -76,7 +76,7 @@ const BasicForm = (props) => {
             onChange={firstNameChangedHandler}
             onBlur={firstNameBlurHandler}
           />
-          {firstNameHasError && <p className="error-text">{errorText}</p>}
+          {firstNameHasError && errorText}
         </div>
         <div className={lastNameClasses}>
           <label htmlFor="name">Last Name</label>
@@ -87,7 +87,7 @@ const BasicForm = (props) => {
             onChange={lastNameChangedHandler}
             onBlur={lastNameBlurHandler}
           />
-          {lastNameHasError && <p className="error-text">{errorText}</p>}
+          {lastNameHasError && errorText}
         </div>
       </div>
       <div className={emailClasses}>
@@ -99,7 +99,7 @@ const BasicForm = (props) => {
           onChange={emailChangedHandler}
           onBlur={emailBlurHandler}
         />
-        {emailHasError && <p className="error-text">{errorText}</p>}
+        {emailHasError && errorText}
       </div>
       <div className="form-actions">
         <button disabled={!formIsValid}>Submit</button>
