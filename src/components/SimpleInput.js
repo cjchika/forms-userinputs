@@ -1,18 +1,36 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 
 const SimpleInput = (props) => {
   const nameInputRef = useRef();
   const [inputName, setInputName] = useState("");
-  const [inpurtNameIsValid, setInputNameIsValid] = useState(true)
+  const [inputNameIsValid, setInputNameIsValid] = useState(false)
+  const [inputNameTouched, setInputNameTouched] = useState(false)
+
+  useEffect(() => {
+    if(inputNameIsValid) {
+      console.log('Opor');
+    }
+  }, [inputNameIsValid])
 
   const nameInputChangeHandler = (event) => {
     setInputName(event.target.value);
   };
 
+  const nameInputBlurHandler = event => {
+    setInputNameTouched(true)
+
+    if (inputName.trim() === '') {
+      setInputNameIsValid(false)
+      return;
+    }
+  };
+
   const formSubmitHandler = (event) => {
     event.preventDefault();
 
-    if (inputName === '') {
+    setInputNameTouched(true)
+
+    if (inputName.trim() === '') {
       setInputNameIsValid(false)
       return;
     }
@@ -25,7 +43,10 @@ const SimpleInput = (props) => {
     setInputName("");
   };
 
-  const nameInputStyles = inpurtNameIsValid ? 'form-control' : 'form-control invalid'
+  const nameInputIsInvalid = !inputNameIsValid && inputNameTouched;
+
+  const nameInputStyles = nameInputIsInvalid ? 'form-control invalid' : 'form-control'
+  
   return (
     <form onSubmit={formSubmitHandler}>
       <div className={nameInputStyles}>
@@ -35,10 +56,11 @@ const SimpleInput = (props) => {
           type="text"
           id="name"
           onChange={nameInputChangeHandler}
+          onBlur={nameInputBlurHandler}
           value={inputName}
         />
       </div>
-      {!inpurtNameIsValid && <p className="error-text">Fill in the space</p>}
+      {nameInputIsInvalid && <p className="error-text">Fill in the space</p>}
       <div className="form-actions">
         <button>Submit</button>
       </div>
