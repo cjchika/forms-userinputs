@@ -24,8 +24,6 @@ const SimpleInput = (props) => {
       return;
     }
 
-    setInputNameIsValid(true)
-
     console.log(inputName);
 
     setInputName("");
