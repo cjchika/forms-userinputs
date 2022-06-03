@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 const SimpleInput = (props) => {
   const nameInputRef = useRef();
   const [inputName, setInputName] = useState("");
+  const [inpurtNameIsValid, setInputNameIsValid] = useState(true)
 
   const nameInputChangeHandler = (event) => {
     setInputName(event.target.value);
@@ -11,16 +12,24 @@ const SimpleInput = (props) => {
   const formSubmitHandler = (event) => {
     event.preventDefault();
 
+    if (inputName === '') {
+      setInputNameIsValid(false)
+      return;
+    }
+
+    setInputNameIsValid(true)
+
     console.log(inputName);
     const enteredVal = nameInputRef.current.value;
     console.log(enteredVal);
     setInputName("");
   };
 
+  const nameInputStyles = inpurtNameIsValid ? 'form-control' : 'form-control invalid'
   return (
     <form onSubmit={formSubmitHandler}>
-      <div className="form-control">
-        <label htmlFor="name">Your Name</label>
+      <div className={nameInputStyles}>
+        <label htmlFor="name">Your Name *</label>
         <input
           ref={nameInputRef}
           type="text"
@@ -29,6 +38,7 @@ const SimpleInput = (props) => {
           value={inputName}
         />
       </div>
+      {!inpurtNameIsValid && <p className="error-text">Fill in the space</p>}
       <div className="form-actions">
         <button>Submit</button>
       </div>
