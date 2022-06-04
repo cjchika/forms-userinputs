@@ -42,6 +42,11 @@ const BasicForm = (props) => {
       return;
     }
 
+    if (!formIsValid) {
+      return;
+    }
+
+    console.log("Submitted");
     console.log(inputFirstName);
     console.log(inputLastName);
     console.log(inputEmail);
@@ -94,10 +99,10 @@ const BasicForm = (props) => {
         </div>
       </div>
       <div className={emailInputStyles}>
-        <label htmlFor="name">E-Mail Address</label>
+        <label htmlFor="email">E-Mail Address</label>
         <input
-          type="text"
-          id="name"
+          type="email"
+          id="email"
           onChange={emailChangeHandler}
           value={inputEmail}
           onBlur={emailBlurHandler}
@@ -107,7 +112,7 @@ const BasicForm = (props) => {
           )}
       </div>
       <div className="form-actions">
-        <button>Submit</button>
+        <button disabled={!formIsValid}>Submit</button>
       </div>
     </form>
   );
